@@ -118,7 +118,7 @@ export default function Dashboard() {
 
     if (isGuest) {
       try {
-        const res = await fetch(`http://127.0.0.1:5000/api/scrape?url=${encodeURIComponent(url)}`);
+        const res = await fetch(`/api/scrape?url=${encodeURIComponent(url)}`);
         const scraped = await res.json();
         
         if (!scraped || scraped.price === null) {
@@ -159,7 +159,7 @@ export default function Dashboard() {
     }
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/products', {
+      const res = await fetch('/api/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ export default function Dashboard() {
     }
     
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/products/${id}`, {
+      const res = await fetch(`/api/products/${id}`, {
         method: 'DELETE',
         headers: { 
           'Authorization': `Bearer ${user?.token}`,
