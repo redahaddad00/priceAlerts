@@ -1,16 +1,16 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
-const puppeteer = require('puppeteer');
+import axios from 'axios';
+import { load } from 'cheerio';
+import puppeteer from 'puppeteer';
 
 // Function to try getting price using Cheerio (Fast, good for static sites)
-const scrapeWithCheerio = async (url) => {
+export const scrapeWithCheerio = async (url) => {
   try {
     const { data } = await axios.get(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
       }
     });
-    const $ = cheerio.load(data);
+    const $ = load(data);
     
     // Meta tags for better titles
     let title = $('meta[property="og:title"]').attr('content') || 
@@ -92,7 +92,7 @@ const scrapeWithCheerio = async (url) => {
 };
 
 // Function to use Puppeteer (Slower, but executes JS)
-const scrapeWithPuppeteer = async (url) => {
+export const scrapeWithPuppeteer = async (url) => {
   let browser = null;
   try {
     browser = await puppeteer.launch({ 
@@ -202,7 +202,7 @@ const scrapeWithPuppeteer = async (url) => {
   }
 };
 
-const scrapeProduct = async (url) => {
+export const scrapeProduct = async (url) => {
   console.log(`[Scraper] Starting scrape for: ${url}`);
   
   try {
@@ -229,5 +229,3 @@ const scrapeProduct = async (url) => {
     return { name: 'Product', price: null };
   }
 };
-
-module.exports = { scrapeProduct };
