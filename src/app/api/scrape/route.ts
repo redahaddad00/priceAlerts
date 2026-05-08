@@ -5,11 +5,7 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const url = searchParams.get('url');
-
-    if (!url) {
-      return NextResponse.json({ message: 'URL is required' }, { status: 400 });
-    }
-
+    if (!url) return NextResponse.json({ message: 'URL is required' }, { status: 400 });
     const data = await scrapeProduct(url);
     return NextResponse.json(data);
   } catch (error) {
